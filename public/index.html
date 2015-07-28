@@ -5,18 +5,19 @@
     <meta charset="utf-8">
     <title>Quizes</title>
     <script type="text/javascript" src="bower_components/angular/angular.js"></script>
+    <script type="text/javascript" src="bower_components/angular-route/angular-route.js"></script>
 </head>
 
 <body>
-    <h1>Quizes</h1>
-    <div ng-controller="IndexCtrl as vm">
-        <span>Filtrar: <input type="text" ng-model="vm.filtro" /> </span>
-        <ul ng-repeat="quiz in vm.quizzes | filter: {pregunta: vm.filtro}">
-            <li>{{quiz.pregunta}}</li>
-            <input type="text" ng-model="respuesta" />
-            <span>{{respuesta === quiz.respuesta ? 'Correcto' : 'Incorrecto'}}</span>
+    <nav>
+        <ul>
+            <span><a href="#/">Inicio</a> | </span>
+            <span><a href="#/quiz">Preguntas</a> | </span>
+            <span><a href="#/quiz/create">Crea tu Quiz</a> </span>
         </ul>
-    </div>
+    </nav>
+    
+    <div ng-view></div>
 
     <script type="text/javascript" src="js/app.js"></script>
     <script type="text/javascript" src="js/controllers.js"></script>

@@ -1,0 +1,9 @@
+<div>
+    <p>A continuación puedes crear tus propias preguntas:</p>
+    <form ng-submit="vm.create()">
+        <input type="text" placeholder='Introduce tu pregunta' ng-model="vm.quiz.pregunta" />
+        <input type="text" placeholder='Introduce tu respuesta' ng-model="vm.quiz.respuesta" />
+        <input type="submit" value="Crear" />
+    </form>
+    <p>{{vm.success}}</p>
+</div>
