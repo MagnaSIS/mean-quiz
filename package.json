@@ -12,8 +12,9 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "body-parser": "^1.13.3",
+    "body-parser": "^1.13.2",
     "express": "^4.13.1",
+    "mongoose": "^4.1.0",
     "morgan": "^1.6.1"
   }
 }

@@ -5,6 +5,17 @@ var express = require('express');
 var app = express();
 var logger = require('morgan');
 var bodyParser = require('body-parser');
+var mongoose = require('mongoose');
+
+// configuracion =========================================
+
+// conexion a la base de datos
+mongoose.connect('mongodb://' + process.env.IP + '/quiz');
+
+var db = mongoose.connection;
+db.once('open', function() {
+  console.log('Connected to database');
+});
 
 // rutas ==================================================
 var apiEndpoints = require('./server/routes/api-endpoints');
