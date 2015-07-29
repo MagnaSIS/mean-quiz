@@ -4,6 +4,10 @@
 var express = require('express');
 var app = express();
 var logger = require('morgan');
+var bodyParser = require('body-parser');
+
+// rutas ==================================================
+var apiEndpoints = require('./server/routes/api-endpoints');
 
 // mostrar en consola las peticiones al servidor
 app.use(logger('dev'));
@@ -13,6 +17,15 @@ app.set('port', process.env.PORT || 3000);
 
 // establecer el entorno a 'desarrollo'
 app.set('env', 'development');
+
+// obtener datos de parametros body (peticiones POST)
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
+
+// establecer rutas api
+app.use('/api/', apiEndpoints);
 
 // establecer ruta de ficheros estáticos - /public/img pasa a ser la URL /img
 app.use(express.static(__dirname + '/public'));
@@ -27,7 +40,7 @@ app.use(function(req, res, next) {
 // manejador en caso de error
 app.use(function(err, req, res, next) {
   res.status(err.status || 500);
-  res.json(err);
+  res.send("<h1>Error " + err.status + ": " + err.message + "</h1>");
 });
 
 // iniciar la app ===============================================
