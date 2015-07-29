@@ -2,7 +2,8 @@
 
 var quizApp = angular.module('quizApp', [
     'ngRoute',
-    'quizControllers'
+    'quizControllers',
+    'quizServices'
 ]);
 
 quizApp.config(function($routeProvider) {

@@ -1,14 +1,5 @@
 'use strict';
 
-// Datos de prueba
-var quizzes = [{
-    pregunta: '¿Capital de Italia?',
-    respuesta: 'Roma'
-}, {
-    pregunta: '¿Capital de Francia?',
-    respuesta: 'París'
-}];
-
 var quizControllers = angular.module('quizControllers', []);
 
 quizControllers.controller('IndexCtrl', [function() {
@@ -16,21 +7,36 @@ quizControllers.controller('IndexCtrl', [function() {
     self.title = 'Quiz: el juego de las preguntas';
 }]);
 
-quizControllers.controller('QuizCtrl', [function() {
+quizControllers.controller('QuizCtrl', ['Quiz', function(Quiz) {
     var self = this;
-    self.quizzes = quizzes;
+    self.quizzes = Quiz.query();
 
     self.remove = function(quiz) {
-        var index = quizzes.indexOf(quiz);
-        quizzes.splice(index, 1);
+        Quiz.remove({
+            quizId: quiz._id
+        }, function(response) {
+            if (response.success) {
+                var index = self.quizzes.indexOf(quiz);
+                self.quizzes.splice(index, 1);
+            }
+            else {
+                alert('Ha ocurrido un error y no se ha podido eliminar el quiz.');
+            }
+        });
     };
 }]);
 
-quizControllers.controller('QuizCreateCtrl', [function() {
+quizControllers.controller('QuizCreateCtrl', ['Quiz', function(Quiz) {
     var self = this;
     self.create = function() {
-        var quiz = self.quiz;
-        quizzes.push(quiz);
-        self.success = 'Pregunta creada correctamente.';
+        var quiz = new Quiz(self.quiz);
+        quiz.$save({}, function(response) {
+            if (response.success) {
+                self.success = 'Pregunta creada correctamente.';
+            }
+            else {
+                self.success = 'Ha ocurrido un error creando la pregunta.';
+            }
+        });
     };
 }]);
